@@ -5,9 +5,10 @@ import org.apache.logging.log4j.Logger;
 
 import net.fabricmc.api.ModInitializer;
 import net.minecraft.block.Block;
-import net.minecraft.tag.TagKey;
+import net.minecraft.registry.Registry;
+import net.minecraft.registry.RegistryKeys;
+import net.minecraft.registry.tag.TagKey;
 import net.minecraft.util.Identifier;
-import net.minecraft.util.registry.Registry;
 
 public class GravelCarts implements ModInitializer {
 	public static final String MODID = "gravel_carts";
@@ -47,6 +48,6 @@ public class GravelCarts implements ModInitializer {
 	}
 
 	private static TagKey<Block> registerBlockTag(String id) {
-        return TagKey.of(Registry.BLOCK_KEY, id(id));
+        return TagKey.of(RegistryKeys.BLOCK, id(id));
     }
 }

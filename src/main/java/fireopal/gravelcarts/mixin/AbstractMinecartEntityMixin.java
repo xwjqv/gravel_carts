@@ -20,10 +20,11 @@ public class AbstractMinecartEntityMixin {
 			return lastMaxSpeedMultiplier;
 		}
 
-		BlockState underState = ((AbstractMinecartEntity)(Object)this).world.getBlockState(((AbstractMinecartEntity)(Object)this).getBlockPos().down());
-		double multiplier = 1; 
+		//BlockState underState = ((AbstractMinecartEntity)(Object)this).world.getBlockState(((AbstractMinecartEntity)(Object)this).getBlockPos().down());
+		BlockState underState = ((AbstractMinecartEntity)(Object)this).getWorld().getBlockState(((AbstractMinecartEntity)(Object)this).getBlockPos().down());
+		double multiplier = 5; 
 
-        if (underState.isIn(GravelCarts.MINECART_SPEED_2_5X_BLOCKS)) {
+        	if (underState.isIn(GravelCarts.MINECART_SPEED_2_5X_BLOCKS)) {
 			multiplier = 2.5;
 		} else if (underState.isIn(GravelCarts.MINECART_SPEED_2X_BLOCKS)) {
 			multiplier = 2;
@@ -36,7 +37,7 @@ public class AbstractMinecartEntityMixin {
 
 		if (GravelCarts.config.maxGravelLayers != 0) {
 			while (
-				((AbstractMinecartEntity)(Object)this).world.getBlockState(
+				((AbstractMinecartEntity)(Object)this).getWorld().getBlockState(
 					((AbstractMinecartEntity)(Object)this).getBlockPos().down(down)
 				).isIn(GravelCarts.MINECART_SPEED_INCREASE_UNDER_TWO)
 			) {
