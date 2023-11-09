@@ -22,7 +22,7 @@ public class AbstractMinecartEntityMixin {
 
 		//BlockState underState = ((AbstractMinecartEntity)(Object)this).world.getBlockState(((AbstractMinecartEntity)(Object)this).getBlockPos().down());
 		BlockState underState = ((AbstractMinecartEntity)(Object)this).getWorld().getBlockState(((AbstractMinecartEntity)(Object)this).getBlockPos().down());
-		double multiplier = 5; 
+		double multiplier = 1;
 
         	if (underState.isIn(GravelCarts.MINECART_SPEED_2_5X_BLOCKS)) {
 			multiplier = 2.5;
