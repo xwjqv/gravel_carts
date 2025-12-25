@@ -16,12 +16,12 @@ public class AbstractMinecartEntityMixin {
 	private double lastMaxSpeedMultiplier;
 
 	private double getMaxSpeedMultiplier() {
-		if (((AbstractMinecartEntity)(Object)this).getPos().equals(lastPos)) {
+		if (((AbstractMinecartEntity)(Object)this).getEntityPos().equals(lastPos)) {
 			return lastMaxSpeedMultiplier;
 		}
 
 		//BlockState underState = ((AbstractMinecartEntity)(Object)this).world.getBlockState(((AbstractMinecartEntity)(Object)this).getBlockPos().down());
-		BlockState underState = ((AbstractMinecartEntity)(Object)this).getWorld().getBlockState(((AbstractMinecartEntity)(Object)this).getBlockPos().down());
+		BlockState underState = ((AbstractMinecartEntity)(Object)this).getController().getWorld().getBlockState(((AbstractMinecartEntity)(Object)this).getBlockPos().down());
 		double multiplier = 1;
 
         	if (underState.isIn(GravelCarts.MINECART_SPEED_2_5X_BLOCKS)) {
@@ -32,12 +32,13 @@ public class AbstractMinecartEntityMixin {
 			multiplier = 1.5;
 		}  
 
+		GravelCarts.LOGGER.info(underState.getBlock().getTranslationKey());
 		int down = 2;
 		boolean cappedLayers = GravelCarts.config.maxGravelLayers >= 0;
 
 		if (GravelCarts.config.maxGravelLayers != 0) {
 			while (
-				((AbstractMinecartEntity)(Object)this).getWorld().getBlockState(
+				((AbstractMinecartEntity)(Object)this).getController().getWorld().getBlockState(
 					((AbstractMinecartEntity)(Object)this).getBlockPos().down(down)
 				).isIn(GravelCarts.MINECART_SPEED_INCREASE_UNDER_TWO)
 			) {
@@ -57,21 +58,22 @@ public class AbstractMinecartEntityMixin {
 		cir.setReturnValue(cir.getReturnValue() * getMaxSpeedMultiplier());
     }
 
-	@Inject(method = "getVelocityMultiplier", at = @At("RETURN"), cancellable = true)
-	private void getVelocityMultiplier(CallbackInfoReturnable<Float> cir) {
-		Vec3d velocityVec = ((AbstractMinecartEntity)(Object)this).getVelocity();
-		double velocity = Math.sqrt(Math.pow(velocityVec.x, 2) + Math.pow(velocityVec.y, 2) + Math.pow(velocityVec.z, 2));
+    	// not needed anymore
+	//@Inject(method = "getVelocityMultiplier", at = @At("RETURN"), cancellable = true)
+	//private void getVelocityMultiplier(CallbackInfoReturnable<Float> cir) {
+	//	Vec3d velocityVec = ((AbstractMinecartEntity)(Object)this).getVelocity();
+	//	double velocity = Math.sqrt(Math.pow(velocityVec.x, 2) + Math.pow(velocityVec.y, 2) + Math.pow(velocityVec.z, 2));
 
-		if (velocity > 0.4) {
-			float friction = 1 - cir.getReturnValue();
-			// System.out.println("Friction: " + friction);
+	//	if (velocity > 0.4) {
+	//		float friction = 1 - cir.getReturnValue();
+	//		// System.out.println("Friction: " + friction);
 
-			float mul = GravelCarts.getVelocityMultiplierMultiplier(velocity);
-			float sub = GravelCarts.getVelocityMultiplierSubtractor(velocity);
+	//		float mul = GravelCarts.getVelocityMultiplierMultiplier(velocity);
+	//		float sub = GravelCarts.getVelocityMultiplierSubtractor(velocity);
 
-			float newVelocityMultiplier = 1 + (friction * mul) - sub;
-			// System.out.println(newVelocityMultiplier);
-			cir.setReturnValue(newVelocityMultiplier);
-		} 
-	}
+	//		float newVelocityMultiplier = 1 + (friction * mul) - sub;
+	//		// System.out.println(newVelocityMultiplier);
+	//		cir.setReturnValue(newVelocityMultiplier);
+	//	} 
+	//}
 }

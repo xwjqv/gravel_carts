@@ -23,7 +23,7 @@ public class GravelCarts implements ModInitializer {
 	}
 
 	public static Identifier id(String id) {
-		return new Identifier(MODID, id);
+		return Identifier.of(MODID, id);
 	}
 
 	public static final TagKey<Block> MINECART_SPEED_INCREASE_UNDER_TWO = registerBlockTag("minecart_speed_increase_under_two");
